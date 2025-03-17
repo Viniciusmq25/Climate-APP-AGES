@@ -29,3 +29,22 @@ body{
     border-radius: 30px;
     border: 5px white solid;
 }
+
+.tempoAtual{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tempoAtual > p{
+    color: white;
+}
+
+.temp{
+    font-size: 3rem;
+}
+
+.dia,.ensol{
+    font-size: 2rem;
+}
