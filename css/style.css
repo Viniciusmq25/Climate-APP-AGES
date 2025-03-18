@@ -1,4 +1,4 @@
-*{
+*{ 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -47,11 +47,11 @@ body{
 }
 
 .temp{
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
-.dia,.ensol{
-    font-size: 2rem;
+.dia, .ensol{
+    font-size: 1.5rem;
 }
 
 .diaSemana{
@@ -64,10 +64,18 @@ body{
     text-align: center;
 }
 
-.diaSemana p{
-    font-size: 28px;
+.amanha{
+  border: white 3px solid;
+  border-radius: 15px;
+  padding: 5px;
+  width: 110px;
+
 }
 
-.imagemDesenho{
+.imagem-principal{
     width: 80px;
+}
+
+.imagem-semana{
+    width: 65px;
 }
