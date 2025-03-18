@@ -2,11 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
 header{
-    margin: 2% auto;
+    margin: 0 auto;
+    margin-top: 2%;
+    margin-bottom: 10px;
     text-align: center;
     color: white;
 }
@@ -24,9 +27,10 @@ body{
 }
 
 .tempoAtual{
-    width: 25%;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     border-radius: 30px;
+    background:linear-gradient(#009ad1,#43cdff);
     border: 5px white solid;
 }
 
@@ -35,6 +39,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 30px;
 }
 
 .tempoAtual > p{
@@ -47,4 +52,22 @@ body{
 
 .dia,.ensol{
     font-size: 2rem;
+}
+
+.diaSemana{
+    display: flex;
+    color: white;
+    margin-top: 2%;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.diaSemana p{
+    font-size: 28px;
+}
+
+.imagemDesenho{
+    width: 80px;
 }
