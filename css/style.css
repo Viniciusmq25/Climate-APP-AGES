@@ -56,29 +56,34 @@ form input:focus{
     border-radius: 10px;
 }
 
-.coluna-esquerda-conteiner{
-  text-align: center;
-}
-
-.coluna-direita-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
 .clima-focado{
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: 500px;
-    height: 350px;
+    padding: 20px;
     border-radius: 30px;
     background:linear-gradient(#009ad1,#43cdff);
     border: 5px white solid;
     color: white;
 }
+
+.coluna-esquerda-conteiner{
+  text-align: center;
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-around;
+  align-items: center;
+  height: 250px;
+  gap: 10px;
+}
+
+.coluna-direita-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 
 .local-conteiner{
     margin: 0 auto;
@@ -95,12 +100,18 @@ form input:focus{
 }
 
 .dia-focado{
-    font-size: 24px;
+    font-size: 22px;
 }
 
+.container-display-temp{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+}
 
 .graus-focado{
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 700;
 }
 
@@ -112,10 +123,16 @@ form input:focus{
   width: 80px;
 }
 
+.temp-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .temp-min-max-container{
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .temp-min, .temp-max{
@@ -124,7 +141,7 @@ form input:focus{
 }
 
 .temp-min img, .temp-max img{
-  width: 12px;
+  width: 10px;
 }
 
 .container-semana{
