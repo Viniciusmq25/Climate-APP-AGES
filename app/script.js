@@ -45,10 +45,12 @@ function showAlert(msg) {
 function infos(json){
     alertBox.style.display = "none";
     document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`;
-    document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°";
+    document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°c";
     document.querySelector("#ventoDir").innerHTML = `${json.direcaoVento}` + "°";
-    document.querySelector("#tempMinT").innerHTML = Math.round(`${json.temperaturaMin}`) + "°";
-    document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`) + "°";
-    document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
+    document.querySelector("#tempMinT").innerHTML = Math.round(`${json.temperaturaMin}`) + "°c";
+    document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`) + "°c";
     document.querySelector("#umid").innerHTML = "Umidade: " + `${json.humidity}` + "%";
+    document.querySelector("#vento").innerHTML = "Vento: " + `${json.windSpeed}` + "km/h";
+    document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.round(`${json.sensacao}`) + "°c";
+    document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
 }
