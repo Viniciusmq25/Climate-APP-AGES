@@ -5,12 +5,11 @@ document.querySelector('#search').addEventListener('submit',async (event) => {
 
     if (!cidade) {
         return showAlert("Você não digitou a cidade!");
-        
     }
    
 
     const chaveApi = "be8e85f6f23f12abc4517022d09d5e8a"
-    const apiCidade = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURI(cidade)}&appid=${chaveApi}&units=metric&lang=pt_br`
+    const apiCidade = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURI(cidade)}&appid=${chaveApi}&units=metric&lang=pt_br`;
     const resultados = await fetch(apiCidade);
     const json = await resultados.json();
     console.log(json);
@@ -48,5 +47,5 @@ function infos(json){
     showAlert("")
     document.querySelector("#local").innerHTML = `${json.city},${json.pais}`
     document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`)
-    document.querySelector("#climaNome").innerHTML = `${json.descrition}`;
+    document.querySelector("#climaNome").innerHTML = `${json.descrition}`
 }
