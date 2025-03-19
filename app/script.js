@@ -45,9 +45,11 @@ function showAlert(msg) {
 
 function infos(json){
     showAlert("")
-    document.querySelector("#local").innerHTML = `${json.city},${json.pais}`
-    document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`)
-    document.querySelector("#climaNome").innerHTML = `${json.descrition}`;
+    document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`
+    document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°";
+    document.querySelector("#ventoDir").innerHTML = `${json.direcaoVento}` + "°";
     document.querySelector("#tempMinT").innerHTML = Math.round(`${json.temperaturaMin}`);
     document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`);
+    document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
+    document.querySelector("#umid").innerHTML = "Umidade: " + `${json.humidity}` + "%";
 }
