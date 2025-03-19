@@ -9,7 +9,7 @@ document.querySelector('#search').addEventListener('submit',async (event) => {
    
 
     const chaveApi = "be8e85f6f23f12abc4517022d09d5e8a"
-    const apiCidade = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURI(cidade)}&appid=${chaveApi}&units=metric&lang=pt_br`
+    const apiCidade = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURI(cidade)}&appid=${chaveApi}&units=metric&lang=pt_br`;
     const resultados = await fetch(apiCidade);
     const json = await resultados.json();
     console.log(json);
@@ -52,4 +52,7 @@ function infos(json){
     document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`);
     document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
     document.querySelector("#umid").innerHTML = "Umidade: " + `${json.humidity}` + "%";
+    document.querySelector("#local").innerHTML = `${json.city},${json.pais}`
+    document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`)
+    document.querySelector("#climaNome").innerHTML = `${json.descrition}`
 }
