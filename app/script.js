@@ -5,7 +5,6 @@ document.querySelector('#search').addEventListener('submit',async (event) => {
 
     if (!cidade) {
         return showAlert("Você não digitou a cidade!");
-        
     }
    
 
@@ -49,4 +48,6 @@ function infos(json){
     document.querySelector("#local").innerHTML = `${json.city},${json.pais}`
     document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`)
     document.querySelector("#climaNome").innerHTML = `${json.descrition}`;
+    document.querySelector("#tempMinT").innerHTML = Math.round(`${json.temperaturaMin}`);
+    document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`);
 }
