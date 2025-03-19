@@ -1,3 +1,5 @@
+const alertBox = document.querySelector('#alert');
+
 document.querySelector('#search').addEventListener('submit',async (event) => {
     event.preventDefault();
     const cidade = document.querySelector('#cidade').value.trim();
@@ -36,15 +38,12 @@ document.querySelector('#search').addEventListener('submit',async (event) => {
 });
 
 function showAlert(msg) {
-    const alertBox = document.querySelector('#alert');
     alertBox.innerHTML = msg;
     alertBox.style.display = "block"; 
-    alertBox.style.visibility = "visible"; 
-    alertBox.style.opacity = "1"; 
 }
 
 function infos(json){
-    showAlert("")
+    alertBox.style.display = "none";
     document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`;
     document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°";
     document.querySelector("#ventoDir").innerHTML = `${json.direcaoVento}` + "°";
