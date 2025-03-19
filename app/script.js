@@ -50,3 +50,4 @@ function infos(json){
     document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`)
     document.querySelector("#climaNome").innerHTML = `${json.descrition}`;
 }
+
