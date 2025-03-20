@@ -173,3 +173,32 @@ form input:focus{
 .temp-dia-semana{
   font-size: 1.5rem;
 }
+
+#suggestions {
+  display: none;
+  margin-bottom: 10px;
+  max-height: 100px;
+  color: white;
+  overflow-y: hidden;
+}
+
+.suggestion-item {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  transition: 200ms;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  color:rgb(0, 0, 0)
+}
+#sugestions::-webkit-scrollbar{
+  width: 15px;
+}
+
+#sugestions::-webkit-scrollbar-track{
+  border-radius: 15px;
+  background-color: black;
+  color: black;
+}
