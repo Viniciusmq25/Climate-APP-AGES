@@ -2,26 +2,42 @@ const alertBox = document.querySelector('#alert');
 const suggestionsBox = document.querySelector('#suggestions');
 
 document.querySelector('#cidade').addEventListener('input', async (event) => {
-    //Função para buscar cidades com mais de 3 caracteres digitados pelo usuário e exibir sugestões de cidades 
-    
-    //const cidade remove tudo que não é letra
-    const cidade = event.target.value.trim() //
+  //Função para buscar cidades com mais de 3 caracteres digitados pelo usuário e exibir sugestões de cidades 
+  
+  const cidade = event.target.value.trim();
 
-    if (cidade.length < 3) {
-        suggestionsBox.style.display = "none";
-        return;
-    }
+  if (cidade.length < 3) {
+    suggestionsBox.style.display = "none";
+    return;
+  }
 
+  const chaveApiAutoPreenchimento = "f80ffc97d8db4bb89a48d6ee3924d834";
+  const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${cidade}&format=json&apiKey=${chaveApiAutoPreenchimento}`;
+
+  try {
+    const response = await fetch(url);
+    const result = await response.json();
+    displaySuggestions(result.results);
+  } catch (error) {
+    console.log('error', error);
+  }
+});
+
+// Adiciona evento de clique no input para mostrar sugestões caso já tenha texto
+document.querySelector('#cidade').addEventListener('click', async (event) => {
+  const cidade = event.target.value.trim();
+  if (cidade.length >= 3) {
     const chaveApiAutoPreenchimento = "f80ffc97d8db4bb89a48d6ee3924d834";
     const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${cidade}&format=json&apiKey=${chaveApiAutoPreenchimento}`;
 
     try {
-        const response = await fetch(url);
-        const result = await response.json();
-        displaySuggestions(result.results);
+      const response = await fetch(url);
+      const result = await response.json();
+      displaySuggestions(result.results);
     } catch (error) {
-        console.log('error', error);
+      console.log('error', error);
     }
+  }
 });
 
 document.addEventListener('click', (event) => {
@@ -34,6 +50,11 @@ document.addEventListener('click', (event) => {
 function displaySuggestions(suggestions) {
     suggestionsBox.innerHTML = '';
     suggestionsBox.style.display = "block";
+
+    if (suggestions.length === 0) {
+        suggestionsBox.innerHTML= "Nenhum lugar encontrado";
+        return;
+    }
 
     suggestions.forEach(suggestion => {
         const div = document.createElement('div');
