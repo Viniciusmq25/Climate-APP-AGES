@@ -8,53 +8,55 @@
 </head>
 
 <body>
-    <form id="search">
-        <img src="imagens/location.png">
-        <input type="search" name="cidade" id="cidade" placeholder="Digite a cidade" alt="Digite a cidade">
-        <button type="submit" ><img src="imagens/find.png" alt="Confirmação de pesquisa"></button>
-    </form>
-    <div id="suggestions"></div>
-    <div id="alert"></div>
+    <div class="SearchboxComponentHost">
+      <form id="search">
+          <img src="imagens/location.svg" alt="Localização">
+          <input type="search" name="cidade" id="cidade" placeholder="Digite a cidade" alt="Digite a cidade">
+          <button type="submit" ><img src="imagens/find.svg" alt="Confirmação de pesquisa"></button>
+        </form>
+        <div id="suggestions"></div>
+        <div id="alert"></div>
+    </div>
     <div class="hoje">
-    <section class="clima-focado"> 
-      <section class="coluna-esquerda-conteiner">
-      <div class="container-local-dia">
-        <div class="local-conteiner">
-          <img src="imagens/location.png">
-          <span class="local-text" id="local">Porto Alegre, BR</span>
-        </div> 
-        <p class="dia-focado" >Segunda, 23 de jan.</p>
-      </div>
+      <section class="clima-focado"> 
+        <section class="coluna-esquerda-conteiner">
+        <div class="container-local-dia">
+          <div class="local-conteiner">
+            <img src="imagens/location.svg">
+            <span class="local-text" id="local">Porto Alegre, BR</span>
+          </div> 
+          <p class="dia-focado" >Segunda, 23 de jan.</p>
+        </div>
 
-        <div class="container-display-temp">
-          <img class="imagem-focado" src="imagens/sun.png"> 
-          
-          <div class="temp-container">
-            <p class="graus-focado" id="tempHj">29°</p>
-            <div class="temp-min-max-container">
-              <div class="temp-min">
-                <p class="temp-min-text" id="tempMinT">20°</p>
-                <img class="temp-min-icon" src="./imagens/arrow-down-solid.svg" alt="Temperatura minima">
-              </div>
-              <div class="temp-max">
-              <p class="temp-max-text" id="tempMaxT">30°</p>
-                <img src="./imagens/arrow-up-solid.svg" alt="Temperatura Maxima">
+          <div class="container-display-temp">
+            <img class="imagem-focado" src="imagens/sun.png"> 
+            
+            <div class="temp-container">
+              <p class="graus-focado" id="tempHj">29°</p>
+              <div class="temp-min-max-container">
+                <div class="temp-min">
+                  <p class="temp-min-text" id="tempMinT">20°</p>
+                  <img class="temp-min-icon" src="./imagens/arrow-down-solid.svg" alt="Temperatura minima">
+                </div>
+                <div class="temp-max">
+                <p class="temp-max-text" id="tempMaxT">30°</p>
+                  <img src="./imagens/arrow-up-solid.svg" alt="Temperatura Maxima">
+                </div>
               </div>
             </div>
           </div>
-        </div>
-          <p class="vento" id="ventoDir">160°</p>
+            <p class="vento" id="ventoDir">160°</p>
+        </section>
+        
+        <section class="coluna-direita-container">
+          <p class="info">Umidade: 60%</p>
+          <p class="info" id="vento">Vel do vento: </p>
+          <p class="info" id="sensacao">Sensação temica:</p>
+          <p class="info" id="climaNome">Clima: ensolarado
+          </p>
+          <p class="info" id="umid">Umidade: 60%</p>
+        </section>
       </section>
-      
-      <section class="coluna-direita-container">
-        <p class="info">Umidade: 60%</p>
-        <p class="info" id="vento">Vel do vento: </p>
-        <p class="info" id="sensacao">Sensação temica:</p>
-        <p class="info" id="climaNome">Clima: ensolarado
-        </p>
-        <p class="info" id="umid">Umidade: 60%</p>
-      </section>
-    </section>
     </div>
     <section class="container-semana">
         <div class="dia-semana">

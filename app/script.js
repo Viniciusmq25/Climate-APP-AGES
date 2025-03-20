@@ -2,7 +2,10 @@ const alertBox = document.querySelector('#alert');
 const suggestionsBox = document.querySelector('#suggestions');
 
 document.querySelector('#cidade').addEventListener('input', async (event) => {
-    const cidade = event.target.value.trim();
+    //Função para buscar cidades com mais de 3 caracteres digitados pelo usuário e exibir sugestões de cidades 
+    
+    //const cidade remove tudo que não é letra
+    const cidade = event.target.value.trim() //
 
     if (cidade.length < 3) {
         suggestionsBox.style.display = "none";
@@ -21,14 +24,26 @@ document.querySelector('#cidade').addEventListener('input', async (event) => {
     }
 });
 
+document.addEventListener('click', (event) => {
+  if (!suggestionsBox.contains(event.target) && event.target.id !== 'cidade') {
+    suggestionsBox.style.display = "none";
+  }
+});
+
+
 function displaySuggestions(suggestions) {
     suggestionsBox.innerHTML = '';
     suggestionsBox.style.display = "block";
 
     suggestions.forEach(suggestion => {
         const div = document.createElement('div');
-        div.textContent = `${suggestion.city}, ${suggestion.country}`;
+        div.innerHTML = `<img src="imagens/find.svg" class="img-suggestion" alt="Confirmação de pesquisa"> ${suggestion.city}, ${suggestion.country}`;
+        //adiciona a classe img-suggestion na imagem da div
         div.classList.add('suggestion-item');
+        //adiciona um icone na esquerda do texto da div
+        if(div.textContent.includes("undefined")) {
+            div.style.display = "none";
+        }
         div.addEventListener('click', () => {
             document.querySelector('#cidade').value = suggestion.city;
             suggestionsBox.style.display = "none";
