@@ -83,6 +83,7 @@ async function apiTemp(cidade) {
     try {
         const resultados = await fetch(apiCidade);
         const json = await resultados.json();
+        console.log(json);
         
         if (json.cod === 200) {
             infos({
@@ -134,7 +135,7 @@ function infos(json) {
     document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
 
     var dirVento = document.querySelector(".vento");
-    dirVento.style.transform = rotate(`${json.direcaoVento}`);
+    dirVento.style.transform = `rotate(${json.direcaoVento}deg)`;
 
     var imgsrc = document.querySelector(".imagem-focado");
     if(`${json.descrition}` == "algumas nuvens"){
