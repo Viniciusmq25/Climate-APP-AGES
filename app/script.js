@@ -132,4 +132,31 @@ function infos(json) {
     document.querySelector("#vento").innerHTML = "Vento: " + `${json.windSpeed}` + "km/h";
     document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.round(`${json.sensacao}`) + "°c";
     document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
+
+    var imgsrc = document.getElementById("gifID");
+    if(`${json.descrition}` == "algumas nuvens"){
+        imgsrc.src = "imagens/cloudy.png";
+        document.getElementById("bodyId").style.backgroundColor = 'rgb(13, 102, 134)';
+    }
+    else if(`${json.descrition}` == "nublado"){
+        imgsrc.src = "imagens/cloudy.gif";
+        document.getElementById("bodyId").style.backgroundColor = 'rgb(13, 102, 134)';
+    }
+    else if(`${json.descrition}` == "céu limpo"){
+        imgsrc.src = "imagens/tranparente.png";
+        document.getElementById("bodyId").style.backgroundColor = 'rgb(37, 175, 224)';
+    }
+    else if(`${json.descrition}` == "chuva forte"){
+        imgsrc.src = "imagens/heavyrain.gif";
+        document.getElementById("bodyId").style.backgroundColor = 'rgb(42, 90, 107)';
+    }
+    else if(`${json.descrition}` == "chuva leve"){
+        imgsrc.src = "imagens/realisticrain.gif";
+        document.getElementById("bodyId").style.backgroundColor = 'rgb(36, 124, 156)';
+    }
+    else if(`${json.descrition}` == "chuva moderada"){
+        imgsrc.src = "imagens/rain.gif";
+        document.getElementById("bodyId").style.backgroundColor = 'rgb(53, 149, 184)';
+    }
+
 }
