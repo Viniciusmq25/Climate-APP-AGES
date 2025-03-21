@@ -94,8 +94,8 @@ form input:focus::placeholder {
 .clima-focado{
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    width: 500px;
+    gap: 50px;
+    width: auto;
     padding: 20px;
     border-radius: 30px;
     background:linear-gradient(#009ad1,#43cdff);
@@ -117,7 +117,6 @@ form input:focus::placeholder {
   flex-direction: column;
   gap: 10px;
 }
-
 
 .local-conteiner{
     margin: 0 auto;
@@ -146,7 +145,8 @@ form input:focus::placeholder {
 }
 
 .vento{
-    font-size: 1.5rem;
+    width: 45px;
+    transform: rotate(0);
 }
 
 .imagem-focado{

@@ -133,6 +133,9 @@ function infos(json) {
     document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.round(`${json.sensacao}`) + "°c";
     document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
 
+    var dirVento = document.querySelector(".vento");
+    dirVento.style.transform = rotate(`${json.direcaoVento}`);
+
     var imgsrc = document.querySelector(".imagem-focado");
     if(`${json.descrition}` == "algumas nuvens"){
         imgsrc.src = "imagens/poucas_nuvens.gif";
