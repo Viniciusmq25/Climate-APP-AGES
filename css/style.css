@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
-  --cor-fonte: white;
+  --cor-fonte: #ece8e8;
   --cor-bg: #18a7db;
   --cor-bg-form: #1694c2;
 }
@@ -99,8 +99,8 @@ form input:focus::placeholder {
     padding: 20px;
     border-radius: 30px;
     background:linear-gradient(#009ad1,#43cdff);
-    border: 5px white solid;
-    color: white;
+    border: 5px var(--cor-fonte) solid;
+    color: var(--cor-fonte);
 }
 
 .coluna-esquerda-conteiner{
@@ -109,8 +109,7 @@ form input:focus::placeholder {
   flex-direction: column; 
   justify-content: space-around;
   align-items: center;
-  height: 250px;
-  gap: 10px;
+  height: 230px;
 }
 
 .coluna-direita-container{
@@ -138,7 +137,7 @@ form input:focus::placeholder {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    gap: 30px;
+    gap: 5px;
 }
 
 .graus-focado{
@@ -151,7 +150,7 @@ form input:focus::placeholder {
 }
 
 .imagem-focado{
-  width: 80px;
+  width: 150px;
 }
 
 .temp-container{
@@ -212,16 +211,19 @@ form input:focus::placeholder {
   gap: 10px;
 }
 
-#suggestions {
+#suggestions, #alert {
   position: absolute;
   width: 100%;
   top: 40px;
   padding: 8px;
   display: none;
-  background-color: #222222;
   border-radius: 10px;
   margin-bottom: 10px;
   overflow-y: hidden;
+}
+
+#suggestions{
+  background-color: #222222;
 }
 
 .suggestion-item {

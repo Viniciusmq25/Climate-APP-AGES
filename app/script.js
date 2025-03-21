@@ -1,9 +1,10 @@
 const alertBox = document.querySelector('#alert');
 const suggestionsBox = document.querySelector('#suggestions');
+const climaFocado = document.querySelector('.clima-focado');
 
 document.querySelector('#cidade').addEventListener('input', async (event) => {
   //Função para buscar cidades com mais de 3 caracteres digitados pelo usuário e exibir sugestões de cidades 
-  
+  alertBox.style.display = "none";
   const cidade = event.target.value.trim();
 
   if (cidade.length < 3) {
@@ -43,6 +44,7 @@ document.querySelector('#cidade').addEventListener('click', async (event) => {
 document.addEventListener('click', (event) => {
   if (!suggestionsBox.contains(event.target) && event.target.id !== 'cidade') {
     suggestionsBox.style.display = "none";
+    alertBox.style.display = "none";
   }
 });
 
@@ -101,7 +103,6 @@ async function apiTemp(cidade) {
         }
     } catch (error) {
         console.log('error', error);
-        showAlert("Erro ao buscar dados da cidade");
     }
 }
 
@@ -122,7 +123,6 @@ function showAlert(msg) {
 }
 
 function infos(json) {
-    alertBox.style.display = "none";
     document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`;
     document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°c";
     document.querySelector("#ventoDir").innerHTML = `${json.direcaoVento}` + "°";
@@ -133,30 +133,35 @@ function infos(json) {
     document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.round(`${json.sensacao}`) + "°c";
     document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
 
-    var imgsrc = document.getElementById("gifID");
+    var imgsrc = document.querySelector(".imagem-focado");
     if(`${json.descrition}` == "algumas nuvens"){
-        imgsrc.src = "imagens/cloudy.png";
-        document.getElementById("bodyId").style.backgroundColor = 'rgb(13, 102, 134)';
+        imgsrc.src = "imagens/poucas_nuvens.gif";
+        climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
     }
     else if(`${json.descrition}` == "nublado"){
-        imgsrc.src = "imagens/cloudy.gif";
-        document.getElementById("bodyId").style.backgroundColor = 'rgb(13, 102, 134)';
-    }
-    else if(`${json.descrition}` == "céu limpo"){
-        imgsrc.src = "imagens/tranparente.png";
-        document.getElementById("bodyId").style.backgroundColor = 'rgb(37, 175, 224)';
+        imgsrc.src = "imagens/nublado.gif";
+        climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
     }
     else if(`${json.descrition}` == "chuva forte"){
-        imgsrc.src = "imagens/heavyrain.gif";
-        document.getElementById("bodyId").style.backgroundColor = 'rgb(42, 90, 107)';
+        imgsrc.src = "imagens/chuva_forte.gif";
+        climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
     }
     else if(`${json.descrition}` == "chuva leve"){
-        imgsrc.src = "imagens/realisticrain.gif";
-        document.getElementById("bodyId").style.backgroundColor = 'rgb(36, 124, 156)';
+        imgsrc.src = "imagens/chuva.gif";
+        climaFocado.style.background = "linear-gradient(#009ad1,#43cdff)";
+
     }
     else if(`${json.descrition}` == "chuva moderada"){
-        imgsrc.src = "imagens/rain.gif";
-        document.getElementById("bodyId").style.backgroundColor = 'rgb(53, 149, 184)';
+        imgsrc.src = "imagens/nublado.gif";
+        climaFocado.style.background = "linear-gradient(#01678b,#01678b)";
+    }
+    else if (`${json.descrition}` == "céu limpo"){
+      imgsrc.src = "imagens/sun.gif";
+      climaFocado.style.background = climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
+    }
+    else if (`${json.descrition}` == "ensolarado"){
+      imgsrc.src = "imagens/sun.gif";
+      climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
     }
 
 }
