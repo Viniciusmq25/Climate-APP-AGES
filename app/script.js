@@ -149,6 +149,7 @@ function showAlert(msg) {
 }
 
 function infos(json) {
+    const date = new Date();
     document.querySelector(".dia-focado").innerHTML = `${json.diaSemana}` + ", " + `${json.dia}` + " de " + `${json.mes}`;
     document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`;
     document.querySelector("#tempHj").innerHTML = Math.floor(`${json.temperatura}`) + "°c";
@@ -159,6 +160,12 @@ function infos(json) {
     document.querySelector("#vento").innerHTML = "Vento: " + `${json.windSpeed}` + "km/h";
     document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.floor(`${json.sensacao}`) + "°c";
     document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
+    document.querySelector("#dia-um").innerHTML = somaDia(date,1);
+    document.querySelector("#dia-dois").innerHTML = somaDia(date,2);
+    document.querySelector("#dia-tres").innerHTML = somaDia(date,3);
+    document.querySelector("#dia-quatro").innerHTML = somaDia(date,4);
+    document.querySelector("#dia-cinco").innerHTML = somaDia(date,5);
+    document.querySelector("#dia-seis").innerHTML = somaDia(date,6);
 
     var dirVento = document.querySelector(".vento");
     dirVento.style.transform = `rotate(${json.direcaoVento}deg)`;
@@ -193,5 +200,39 @@ function infos(json) {
       imgsrc.src = "imagens/sun.gif";
       climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
     }
+
+    function somaDia(date, soma){
+      var som = date.getDay() + soma;
+      if(som > 7){
+        som = som -7;
+      }
+        switch (som){
+            case 0:
+                var som = "Dom.";
+                break;
+            case 1:
+                var som = "Seg.";
+                break;
+            case 2:
+                var som = "Ter.";
+                break;
+            case 3:
+                var som = "Qua.";
+                break;
+            case 4:
+                var som = "Qui.";
+                break;
+            case 5:
+                var som = "Sex.";
+                break;
+            case 6:
+                var som = "Sab.";
+                break;
+            case 7:
+                var som = "Dom.";
+                break;
+        }
+      return som;
+  }
 
 }
