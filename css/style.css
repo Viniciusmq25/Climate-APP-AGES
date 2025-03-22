@@ -150,7 +150,8 @@ form input:focus::placeholder {
 }
 
 .imagem-focado{
-  width: 150px;
+  width: 130px;
+  height: 130px;
 }
 
 .temp-container{

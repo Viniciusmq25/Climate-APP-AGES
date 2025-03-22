@@ -86,6 +86,25 @@ async function apiTemp(cidade) {
         console.log(json);
         
         if (json.cod === 200) {
+
+          const lat = json.coord.lat;
+          const lon = json.coord.lon;
+          const dataHora = new Date(json.dt * 1000);
+          dataHora.setHours(dataHora.getHours() - 3);
+          const formattedDate = dataHora.toISOString().replace('T', ' ').slice(0, 19);
+          const diaDoAno = formattedDate.slice(0, 10); // aaaa-mm-dd
+          const hora = formattedDate.slice(11, 19);
+          const dia = diaDoAno.slice(8, 10);
+
+
+          const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+          const mes = meses[parseInt(diaDoAno.slice(5, 7)) - 1];
+          
+          const diasDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+          const diaSemana = diasDaSemana[dataHora.getDay()];
+
+          console.log(`Latitude: ${lat}, Longitude: ${lon}, Dia: ${dia} ${mes} ${diaSemana}, Horanaonaoformatada: ${json.dt}`);
+
             infos({
                 city: json.name,
                 pais: json.sys.country,
@@ -98,6 +117,12 @@ async function apiTemp(cidade) {
                 humidity: json.main.humidity,
                 sensacao: json.main.feels_like,
                 direcaoVento: json.wind.deg,
+                latitude: lat,
+                longitude: lon,
+                dia: dia,
+                diaSemana: diaSemana,
+                mes: mes,
+                hora: hora
             });
         } else {
             showAlert("Não foi possível encontrar a sua cidade");
@@ -124,14 +149,15 @@ function showAlert(msg) {
 }
 
 function infos(json) {
+    document.querySelector(".dia-focado").innerHTML = `${json.diaSemana}` + ", " + `${json.dia}` + " de " + `${json.mes}`;
     document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`;
-    document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°c";
+    document.querySelector("#tempHj").innerHTML = Math.floor(`${json.temperatura}`) + "°c";
     document.querySelector("#ventoDir").innerHTML = `${json.direcaoVento}` + "°";
-    document.querySelector("#tempMinT").innerHTML = Math.round(`${json.temperaturaMin}`) + "°c";
-    document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`) + "°c";
+    document.querySelector("#tempMinT").innerHTML = Math.floor(`${json.temperaturaMin}`) + "°c";
+    document.querySelector("#tempMaxT").innerHTML = Math.floor(`${json.temperaturaMax}`) + "°c";
     document.querySelector("#umid").innerHTML = "Umidade: " + `${json.humidity}` + "%";
     document.querySelector("#vento").innerHTML = "Vento: " + `${json.windSpeed}` + "km/h";
-    document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.round(`${json.sensacao}`) + "°c";
+    document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.floor(`${json.sensacao}`) + "°c";
     document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
 
     var dirVento = document.querySelector(".vento");
