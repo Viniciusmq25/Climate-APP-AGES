@@ -79,6 +79,24 @@ function displaySuggestions(suggestions) {
     });
 }
 
+const dropdownMenu = document.getElementById("dropContent");
+const dropdownButton = document.getElementById("language");
+
+const changeDisplayDropdown = function(){
+  dropdownMenu.classList.toggle("show");
+}
+
+dropdownButton.addEventListener("click", function (e){
+  e.stopPropagation();
+  changeDisplayDropdown();
+});
+
+document.documentElement.addEventListener("click", function () {
+  if (dropdownMenu.classList.contains("show")) {
+    changeDisplayDropdown();
+  }
+});
+
 async function apiSemana(cidade) {
   const chaveApi = "be8e85f6f23f12abc4517022d09d5e8a";
   const apiSemana = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURI(cidade)}&appid=${chaveApi}&units=metric&lang=pt_br`;

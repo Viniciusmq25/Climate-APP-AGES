@@ -90,6 +90,61 @@ form input:focus::placeholder {
   color: transparent;
 }
 
+.dropbox{
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  display: inline-block;
+}
+
+.dropbox button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:#1694c2;
+  border: none;
+  border: white 1px solid;
+  border-radius: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 10px;
+  width: 60px;
+  height: 30px;
+  cursor: pointer;
+  color: white;
+}
+
+.dropboxContent {
+  visibility: hidden;
+  opacity: 0; 
+  position: absolute;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 7px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.dropboxContent a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  display: block;
+}
+
+
+.dropboxContent a:hover {
+  background-color: rgb(212, 196, 171);
+}
+
+.show {
+  visibility: visible;
+  opacity: 1;
+}
+
 #alert {
     display: none;
     color: black;
