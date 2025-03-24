@@ -1,6 +1,8 @@
 const alertBox = document.querySelector('#alert');
 const suggestionsBox = document.querySelector('#suggestions');
 const climaFocado = document.querySelector('.clima-focado');
+const body = document.querySelector('body');
+const form = document.querySelector('form');
 
 document.querySelector('#cidade').addEventListener('input', async (event) => {
   //Função para buscar cidades com mais de 3 caracteres digitados pelo usuário e exibir sugestões de cidades 
@@ -125,7 +127,7 @@ async function apiTemp(cidade) {
           dataHora.setHours(dataHora.getHours() - 3);
           const formattedDate = dataHora.toISOString().replace('T', ' ').slice(0, 19);
           const diaDoAno = formattedDate.slice(0, 10); // aaaa-mm-dd
-          const hora = formattedDate.slice(11, 19);
+          const hora = formattedDate.slice(11, 13);
           const dia = diaDoAno.slice(8, 10);
 
 
@@ -135,7 +137,7 @@ async function apiTemp(cidade) {
           const diasDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
           const diaSemana = diasDaSemana[dataHora.getDay()];
 
-          console.log(`Latitude: ${lat}, Longitude: ${lon}, Dia: ${dia} ${mes} ${diaSemana}, Horanaonaoformatada: ${json.dt}`);
+          console.log(`Latitude: ${lat}, Longitude: ${lon}, Dia: ${dia} ${mes} ${diaSemana}, Hora ${hora}`);
 
             infos({
                 city: json.name,
@@ -153,7 +155,8 @@ async function apiTemp(cidade) {
                 dia: dia,
                 diaSemana: diaSemana,
                 mes: mes,
-                hora: hora
+                hora: hora,
+                timezone: json.timezone,
             });
         } else {
             showAlert("Não foi possível encontrar a sua cidade");
@@ -196,41 +199,71 @@ function infos(json) {
     document.querySelector("#dia-tres").innerHTML = somaDia(date,3);
     document.querySelector("#dia-quatro").innerHTML = somaDia(date,4);
     document.querySelector("#dia-cinco").innerHTML = somaDia(date,5);
-    document.querySelector("#dia-seis").innerHTML = somaDia(date,6);
-    
 
     var dirVento = document.querySelector(".vento");
     dirVento.style.transform = `rotate(${json.direcaoVento}deg)`;
 
     var imgsrc = document.querySelector(".imagem-focado");
-    if(`${json.descrition}` == "algumas nuvens"){
-        imgsrc.src = "imagens/poucas_nuvens.gif";
-        climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
-    }
-    else if(`${json.descrition}` == "nublado"){
-        imgsrc.src = "imagens/nublado.gif";
-        climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
-    }
-    else if(`${json.descrition}` == "chuva forte"){
-        imgsrc.src = "imagens/chuva_forte.gif";
-        climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
-    }
-    else if(`${json.descrition}` == "chuva leve"){
-        imgsrc.src = "imagens/chuva.gif";
-        climaFocado.style.background = "linear-gradient(#009ad1,#43cdff)";
 
+    timezone = parseInt(json.timezone) / 3600;
+    intHora = parseInt(json.hora) + 3 + timezone; // converte a hora para inteiro
+    if (intHora >= 24) {
+        intHora = intHora - 24;
     }
-    else if(`${json.descrition}` == "chuva moderada"){
-        imgsrc.src = "imagens/nublado.gif";
-        climaFocado.style.background = "linear-gradient(#01678b,#01678b)";
-    }
-    else if (`${json.descrition}` == "céu limpo"){
-      imgsrc.src = "imagens/sun.gif";
-      climaFocado.style.background = climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
-    }
-    else if (`${json.descrition}` == "ensolarado"){
-      imgsrc.src = "imagens/sun.gif";
-      climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
+    console.log(intHora);
+    const isNight = intHora >= 18 || intHora < 6; // verifica se é noite (entre 18h e 6h)
+
+    switch(json.descrition) {
+        case "algumas nuvens":
+            imgsrc.src = "imagens/poucas_nuvens.gif";
+            if(isNight) {
+              noite();
+            } else {
+                climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
+            }
+            break;
+        case "nublado":
+            imgsrc.src = "imagens/nublado.gif";
+            if(isNight) {
+                noite();
+            } else {
+                climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
+            }
+            break;
+        case "chuva forte":
+            imgsrc.src = "imagens/chuva_forte.gif";
+            if(isNight) {
+              noite();
+            } else {
+                climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
+            }
+            break;
+        case "chuva leve":
+            imgsrc.src = "imagens/chuva.gif";
+            if(isNight) {
+                noite();
+            } else {
+                climaFocado.style.background = "linear-gradient(#009ad1,#43cdff)";
+            }
+            break;
+        case "chuva moderada":
+            imgsrc.src = "imagens/nublado.gif";
+            if(isNight) {
+                noite();
+            } else {
+                climaFocado.style.background = "linear-gradient(#01678b,#01678b)";
+            }
+            break;
+        case "céu limpo":
+        case "ensolarado":
+            imgsrc.src = "imagens/sun.gif";
+            console.log(imgsrc.src);
+            if(isNight) {
+                noite();
+            } else {
+                climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
+            }
+            break;
     }
 
     function somaDia(date, soma){
@@ -285,25 +318,33 @@ function infosSemana(json) {
 function atualizarImagemDia(selector, descricao) {
   var imgsrc = document.querySelector(selector);
   
-  if(descricao == "algumas nuvens"){
-      imgsrc.src = "imagens/poucas_nuvens.gif";
+  switch(descricao) {
+      case "algumas nuvens":
+          imgsrc.src = "imagens/poucas_nuvens.gif";
+          break;
+      case "nublado":
+          imgsrc.src = "imagens/nublado.gif";
+          break;
+      case "chuva forte":
+          imgsrc.src = "imagens/chuva_forte.gif";
+          break;
+      case "chuva leve":
+          imgsrc.src = "imagens/chuva.gif";
+          break;
+      case "chuva moderada":
+          imgsrc.src = "imagens/nublado.gif";
+          break;
+      case "céu limpo":
+      case "ensolarado":
+          imgsrc.src = "imagens/sun.gif";
+          break;
   }
-  else if(descricao == "nublado"){
-      imgsrc.src = "imagens/nublado.gif";
-  }
-  else if(descricao == "chuva forte"){
-      imgsrc.src = "imagens/chuva_forte.gif";
-  }
-  else if(descricao == "chuva leve"){
-      imgsrc.src = "imagens/chuva.gif";
-  }
-  else if(descricao == "chuva moderada"){
-      imgsrc.src = "imagens/nublado.gif";
-  }
-  else if (descricao == "céu limpo"){
-    imgsrc.src = "imagens/sun.gif";
-  }
-  else if (descricao == "ensolarado"){
-    imgsrc.src = "imagens/sun.gif";
-  }
+}
+
+function noite(){
+  climaFocado.style.background = "url(imagens/night.png), linear-gradient(#01344d,#014d6e)";
+  climaFocado.style.backgroundSize = "cover";
+  body.style.background = "linear-gradient(#01344d,#014d6e)";
+  form.style.backgroundColor = "#01344d";
+
 }
