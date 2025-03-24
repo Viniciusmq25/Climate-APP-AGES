@@ -344,7 +344,7 @@ function atualizarImagemDia(selector, descricao) {
 function noite(){
   climaFocado.style.background = "url(imagens/night.png), linear-gradient(#01344d,#014d6e)";
   climaFocado.style.backgroundSize = "cover";
-  body.style.background = "linear-gradient(#01344d,#014d6e)";
+  body.style.background = "linear-gradient(#01344d ,#014d6e)";
   form.style.backgroundColor = "#01344d";
 
 }
