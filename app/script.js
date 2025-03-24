@@ -71,9 +71,41 @@ function displaySuggestions(suggestions) {
             document.querySelector('#cidade').value = suggestion.city;
             suggestionsBox.style.display = "none";
             apiTemp(suggestion.city);
+            apiSemana(suggestion.city);
         });
         suggestionsBox.appendChild(div);
     });
+}
+
+async function apiSemana(cidade) {
+  const chaveApi = "be8e85f6f23f12abc4517022d09d5e8a";
+  const apiSemana = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURI(cidade)}&appid=${chaveApi}&units=metric&lang=pt_br`;
+  try {
+      const resultados = await fetch(apiSemana);
+      const json = await resultados.json();
+      console.log(json);
+
+      if (json.cod == 200) {
+        infosSemana({
+          tempDia1: json.list[7].main.temp,
+          tempDia2: json.list[15].main.temp,
+          tempDia3: json.list[23].main.temp,
+          tempDia4: json.list[31].main.temp,
+          tempDia5: json.list[39].main.temp,
+          descDia1: json.list[7].weather[0].description,
+          descDia2: json.list[15].weather[0].description,
+          descDia3: json.list[23].weather[0].description,
+          descDia4: json.list[31].weather[0].description,
+          descDia5: json.list[39].weather[0].description,
+        });
+      } 
+  else {
+      showAlert("Não foi possível encontrar a sua cidade");
+  }
+} catch (error) {
+  console.log('error', error);
+}
+
 }
 
 async function apiTemp(cidade) {
@@ -112,7 +144,6 @@ async function apiTemp(cidade) {
                 temperaturaMax: json.main.temp_max,
                 temperaturaMin: json.main.temp_min,
                 descrition: json.weather[0].description,
-                tempIcon: json.weather[0].icon,
                 windSpeed: json.wind.speed,
                 humidity: json.main.humidity,
                 sensacao: json.main.feels_like,
@@ -152,13 +183,13 @@ function infos(json) {
     const date = new Date();
     document.querySelector(".dia-focado").innerHTML = `${json.diaSemana}` + ", " + `${json.dia}` + " de " + `${json.mes}`;
     document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`;
-    document.querySelector("#tempHj").innerHTML = Math.floor(`${json.temperatura}`) + "°c";
+    document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°c";
     document.querySelector("#ventoDir").innerHTML = `${json.direcaoVento}` + "°";
-    document.querySelector("#tempMinT").innerHTML = Math.floor(`${json.temperaturaMin}`) + "°c";
-    document.querySelector("#tempMaxT").innerHTML = Math.floor(`${json.temperaturaMax}`) + "°c";
+    document.querySelector("#tempMinT").innerHTML = Math.round(`${json.temperaturaMin}`) + "°c";
+    document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`) + "°c";
     document.querySelector("#umid").innerHTML = "Umidade: " + `${json.humidity}` + "%";
     document.querySelector("#vento").innerHTML = "Vento: " + `${json.windSpeed}` + "km/h";
-    document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.floor(`${json.sensacao}`) + "°c";
+    document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.round(`${json.sensacao}`) + "°c";
     document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
     document.querySelector("#dia-um").innerHTML = somaDia(date,1);
     document.querySelector("#dia-dois").innerHTML = somaDia(date,2);
@@ -166,6 +197,7 @@ function infos(json) {
     document.querySelector("#dia-quatro").innerHTML = somaDia(date,4);
     document.querySelector("#dia-cinco").innerHTML = somaDia(date,5);
     document.querySelector("#dia-seis").innerHTML = somaDia(date,6);
+    
 
     var dirVento = document.querySelector(".vento");
     dirVento.style.transform = `rotate(${json.direcaoVento}deg)`;
@@ -235,4 +267,43 @@ function infos(json) {
       return som;
   }
 
+}
+
+function infosSemana(json) {
+  document.querySelector("#tempDiaSemana1").innerHTML = Math.round(`${json.tempDia1}`);
+  document.querySelector("#tempDiaSemana2").innerHTML = Math.round(`${json.tempDia2}`);
+  document.querySelector("#tempDiaSemana3").innerHTML = Math.round(`${json.tempDia3}`);
+  document.querySelector("#tempDiaSemana4").innerHTML = Math.round(`${json.tempDia4}`);
+  document.querySelector("#tempDiaSemana5").innerHTML = Math.round(`${json.tempDia5}`);
+  atualizarImagemDia("#imagem-dia1", json.descDia1);
+  atualizarImagemDia("#imagem-dia2", json.descDia2);
+  atualizarImagemDia("#imagem-dia3", json.descDia3);
+  atualizarImagemDia("#imagem-dia4", json.descDia4);
+  atualizarImagemDia("#imagem-dia5", json.descDia5);
+}
+
+function atualizarImagemDia(selector, descricao) {
+  var imgsrc = document.querySelector(selector);
+  
+  if(descricao == "algumas nuvens"){
+      imgsrc.src = "imagens/poucas_nuvens.gif";
+  }
+  else if(descricao == "nublado"){
+      imgsrc.src = "imagens/nublado.gif";
+  }
+  else if(descricao == "chuva forte"){
+      imgsrc.src = "imagens/chuva_forte.gif";
+  }
+  else if(descricao == "chuva leve"){
+      imgsrc.src = "imagens/chuva.gif";
+  }
+  else if(descricao == "chuva moderada"){
+      imgsrc.src = "imagens/nublado.gif";
+  }
+  else if (descricao == "céu limpo"){
+    imgsrc.src = "imagens/sun.gif";
+  }
+  else if (descricao == "ensolarado"){
+    imgsrc.src = "imagens/sun.gif";
+  }
 }

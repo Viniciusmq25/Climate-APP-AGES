@@ -247,3 +247,8 @@ form input:focus::placeholder {
   background-color: black;
   color: black;
 }
+
+.lupa{
+  cursor: pointer;
+}
+
