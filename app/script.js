@@ -277,7 +277,7 @@ function infos(json) {
             }
             break;
         case "nublado":
-            imgsrc.src = "imagens/nublado.gif";
+            imgsrc.src = "imagens/nubladoer.gif";
             if(isNight) {
                 noite();
             } else {
@@ -301,7 +301,7 @@ function infos(json) {
             }
             break;
         case "chuva moderada":
-            imgsrc.src = "imagens/nublado.gif";
+            imgsrc.src = "imagens/nubladoer.gif";
             if(isNight) {
                 noite();
             } else {
@@ -310,7 +310,7 @@ function infos(json) {
             break;
         case "céu limpo":
         case "ensolarado":
-            imgsrc.src = "imagens/sun.gif";
+            imgsrc.src = "imagens/suner.gif";
             console.log(imgsrc.src);
             if(isNight) {
                 noite();
