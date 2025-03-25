@@ -105,13 +105,49 @@ async function apiSemana(cidade) {
       const json = await resultados.json();
       console.log(json);
 
+      function calculaMax(inicio, fim) {
+        let max = -200;
+        
+        for(let i = inicio; i < fim; i++) {
+          if(json.list[i].main.temp_max > max) {
+            max = json.list[i].main.temp_max;
+          }
+        }
+        return max;
+      }
+      function calculaMin(inicio, fim) {
+        let min = 600;
+        
+        for(let i = inicio; i < fim; i++) {
+          if(json.list[i].main.temp_min < min) {
+            min = json.list[i].main.temp_min;
+          }
+        }
+        return min;
+      }
+
       if (json.cod == 200) {
+        var dia1 = calculaMax(0, 8);
+        var dia1min = calculaMin(0, 8);
+        var dia2 = calculaMax(9, 16);
+        var dia2min = calculaMin(9, 16);
+        var dia3 = calculaMax(17, 24);
+        var dia3min = calculaMin(17, 24);
+        var dia4 = calculaMax(25, 32);
+        var dia4min = calculaMin(25, 32);
+        var dia5 = calculaMax(32, 40);
+        var dia5min = calculaMin(32, 40);
         infosSemana({
-          tempDia1: json.list[7].main.temp,
-          tempDia2: json.list[15].main.temp,
-          tempDia3: json.list[23].main.temp,
-          tempDia4: json.list[31].main.temp,
-          tempDia5: json.list[39].main.temp,
+          tempDia1: dia1,
+          tempDia1M: dia1min,
+          tempDia2: dia2,
+          tempDia2M: dia2min,
+          tempDia3: dia3,
+          tempDia3M: dia3min,
+          tempDia4: dia4,
+          tempDia4M: dia4min,
+          tempDia5: dia5,
+          tempDia5M: dia5min,
           descDia1: json.list[7].weather[0].description,
           descDia2: json.list[15].weather[0].description,
           descDia3: json.list[23].weather[0].description,
@@ -321,11 +357,11 @@ function infos(json) {
 }
 
 function infosSemana(json) {
-  document.querySelector("#tempDiaSemana1").innerHTML = Math.round(`${json.tempDia1}`);
-  document.querySelector("#tempDiaSemana2").innerHTML = Math.round(`${json.tempDia2}`);
-  document.querySelector("#tempDiaSemana3").innerHTML = Math.round(`${json.tempDia3}`);
-  document.querySelector("#tempDiaSemana4").innerHTML = Math.round(`${json.tempDia4}`);
-  document.querySelector("#tempDiaSemana5").innerHTML = Math.round(`${json.tempDia5}`);
+  document.querySelector("#tempDiaSemana1").innerHTML =  Math.round(`${json.tempDia1}`) + "°/" + Math.round(`${json.tempDia1M}`) + "°";
+  document.querySelector("#tempDiaSemana2").innerHTML = Math.round(`${json.tempDia2}`) + "°/" + Math.round(`${json.tempDia2M}`) + "°";
+  document.querySelector("#tempDiaSemana3").innerHTML = Math.round(`${json.tempDia3}`) + "°/" + Math.round(`${json.tempDia3M}`) + "°"
+  document.querySelector("#tempDiaSemana4").innerHTML = Math.round(`${json.tempDia4}`) + "°/" + Math.round(`${json.tempDia4M}`) + "°"
+  document.querySelector("#tempDiaSemana5").innerHTML = Math.round(`${json.tempDia5}`) + "°/" + Math.round(`${json.tempDia5M}`) + "°"
   atualizarImagemDia("#imagem-dia1", json.descDia1);
   atualizarImagemDia("#imagem-dia2", json.descDia2);
   atualizarImagemDia("#imagem-dia3", json.descDia3);
