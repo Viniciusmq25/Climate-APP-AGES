@@ -309,6 +309,11 @@ function infos(json) {
             }
             break;
         case "céu limpo":
+          if(isNight){
+            noite();
+            imgsrc.src = "imagens/lua.gif";
+          }
+          break;
         case "ensolarado":
             imgsrc.src = "imagens/suner.gif";
             console.log(imgsrc.src);
@@ -400,5 +405,5 @@ function noite(){
   climaFocado.style.backgroundSize = "cover";
   body.style.background = "linear-gradient(#01344d ,#014d6e)";
   form.style.backgroundColor = "#01344d";
-
+  var imgsrc = document.querySelector(".imagem-focado");
 }
