@@ -269,7 +269,7 @@ function infos(json) {
 
     switch(json.descrition) {
         case "algumas nuvens":
-            imgsrc.src = "imagens/poucas_nuvens.gif";
+            imgsrc.src = "imagens/poucas_nuvensss.gif";
             if(isNight) {
               noite();
             } else {
