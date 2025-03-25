@@ -101,7 +101,7 @@ form input:focus::placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:#1694c2;
+  background-color:#18a7db;
   border: none;
   border: white 1px solid;
   border-radius: 7px;
@@ -118,26 +118,40 @@ form input:focus::placeholder {
   visibility: hidden;
   opacity: 0; 
   position: absolute;
-  width: 100%;
-  background-color: #ffffff;
+  width: 100wv;
+  background-color:#18a7db;
   border-radius: 7px;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+  max-height: 189px;
+  overflow: auto;
 }
 
-.dropboxContent a {
-  color: rgb(0, 0, 0);
+.dropboxContent button {
+  color: rgb(255, 255, 255);
   text-decoration: none;
   display: block;
+  margin: 0;
+  padding: 0;
+  background-color:#18a7db;
+  border: solid 1px white;
+  border-radius: 5px;
 }
 
+.dropboxContent button:hover{
+  background-color: #31bbee;
+}
 
-.dropboxContent a:hover {
-  background-color: rgb(212, 196, 171);
+::-webkit-scrollbar{
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: rgb(243, 243, 243);
 }
 
 .show {
