@@ -3,6 +3,7 @@ const suggestionsBox = document.querySelector('#suggestions');
 const climaFocado = document.querySelector('.clima-focado');
 const body = document.querySelector('body');
 const form = document.querySelector('form');
+const botao1 = document.querySelector("#tempDiaSemana1")
 
 document.querySelector('#cidade').addEventListener('input', async (event) => {
   //Função para buscar cidades com mais de 3 caracteres digitados pelo usuário e exibir sugestões de cidades 
@@ -153,6 +154,16 @@ async function apiSemana(cidade) {
           descDia3: json.list[23].weather[0].description,
           descDia4: json.list[31].weather[0].description,
           descDia5: json.list[39].weather[0].description,
+          umidadeDia1: json.list[7].main.humidity,
+          umidadeDia2: json.list[15].main.humidity,
+          umidadeDia3: json.list[23].main.humidity,
+          umidadeDia4: json.list[31].main.humidity,
+          umidadeDia5: json.list[39].main.humidity,
+          velocidadeVento1: json.list[7].wind.speed,
+          velocidadeVento2: json.list[15].wind.speed,
+          velocidadeVento3: json.list[23].wind.speed,
+          velocidadeVento4: json.list[31].wind.speed,
+          velocidadeVento5: json.list[39].wind.speed,
         });
       } 
   else {
@@ -210,7 +221,7 @@ async function apiTemp(cidade) {
                 diaSemana: diaSemana,
                 mes: mes,
                 hora: hora,
-                timezone: json.timezone,
+                timezone: json.timezone
             });
         } else {
             showAlert("Não foi possível encontrar a sua cidade");
@@ -238,6 +249,7 @@ function showAlert(msg) {
 
 function infos(json) {
     const date = new Date();
+    velVento = Math.round(`${json.windSpeed}` *3,6);
     document.querySelector(".dia-focado").innerHTML = `${json.diaSemana}` + ", " + `${json.dia}` + " de " + `${json.mes}`;
     document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`;
     document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°c";
@@ -245,7 +257,7 @@ function infos(json) {
     document.querySelector("#tempMinT").innerHTML = Math.round(`${json.temperaturaMin}`) + "°c";
     document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`) + "°c";
     document.querySelector("#umid").innerHTML = "Umidade: " + `${json.humidity}` + "%";
-    document.querySelector("#vento").innerHTML = "Vento: " + `${json.windSpeed}` + "km/h";
+    document.querySelector("#vento").innerHTML = "Vento: " + velVento + " km/h";
     document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.round(`${json.sensacao}`) + "°c";
     document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
     document.querySelector("#dia-um").innerHTML = somaDia(date,1);
@@ -407,3 +419,21 @@ function noite(){
   form.style.backgroundColor = "#01344d";
   var imgsrc = document.querySelector(".imagem-focado");
 }
+
+botao.addEventListener("mouseenter", function(){
+    document.querySelector(".dia-focado").innerHTML = `${json.diaSemana}` + ", " + `${json.dia}` + " de " + `${json.mes}`;
+    document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`;
+    document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°c";
+    document.querySelector("#ventoDir").innerHTML = `${json.direcaoVento}` + "°";
+    document.querySelector("#tempMinT").innerHTML = Math.round(`${json.temperaturaMin}`) + "°c";
+    document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`) + "°c";
+    document.querySelector("#umid").innerHTML = "Umidade: " + `${json.umidadeDia1}` + "%";
+    document.querySelector("#vento").innerHTML = "Vento: " + velVento + " km/h";
+    document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.round(`${json.sensacao}`) + "°c";
+    document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
+    document.querySelector("#dia-um").innerHTML = somaDia(date,1);
+    document.querySelector("#dia-dois").innerHTML = somaDia(date,2);
+    document.querySelector("#dia-tres").innerHTML = somaDia(date,3);
+    document.querySelector("#dia-quatro").innerHTML = somaDia(date,4);
+    document.querySelector("#dia-cinco").innerHTML = somaDia(date,5);
+})
