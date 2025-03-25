@@ -3,7 +3,6 @@ const suggestionsBox = document.querySelector('#suggestions');
 const climaFocado = document.querySelector('.clima-focado');
 const body = document.querySelector('body');
 const form = document.querySelector('form');
-const botao1 = document.querySelector("#tempDiaSemana1")
 
 document.querySelector('#cidade').addEventListener('input', async (event) => {
   //Função para buscar cidades com mais de 3 caracteres digitados pelo usuário e exibir sugestões de cidades 
@@ -164,6 +163,11 @@ async function apiSemana(cidade) {
           velocidadeVento3: json.list[23].wind.speed,
           velocidadeVento4: json.list[31].wind.speed,
           velocidadeVento5: json.list[39].wind.speed,
+          sensacaoDia1: json.list[7].main.feels_like,
+          sensacaoDia2: json.list[15].main.feels_like,
+          sensacaoDia3: json.list[23].main.feels_like,
+          sensacaoDia4: json.list[31].main.feels_like,
+          sensacaoDia5: json.list[39].main.feels_like,
         });
       } 
   else {
@@ -269,8 +273,6 @@ function infos(json) {
     var dirVento = document.querySelector(".vento");
     dirVento.style.transform = `rotate(${json.direcaoVento}deg)`;
 
-    var imgsrc = document.querySelector(".imagem-focado");
-
     timezone = parseInt(json.timezone) / 3600;
     intHora = parseInt(json.hora) + 3 + timezone; // converte a hora para inteiro
     if (intHora >= 24) {
@@ -278,6 +280,16 @@ function infos(json) {
     }
     console.log(intHora);
     const isNight = intHora >= 18 || intHora < 6; // verifica se é noite (entre 18h e 6h)
+    
+    if (isNight) {
+      noite();
+  } else {
+      climaFocado.style.background = "linear-gradient(#009ad1, #43cdff)";
+      body.style.background = "#18a7db";
+      form.style.backgroundColor = "#18a7db";
+  }
+
+  const imgsrc = document.querySelector(".imagem-focado");
 
     switch(json.descrition) {
         case "algumas nuvens":
@@ -321,6 +333,7 @@ function infos(json) {
             }
             break;
         case "céu limpo":
+          imgsrc.src = "imagens/suner.gif";
           if(isNight){
             noite();
             imgsrc.src = "imagens/lua.gif";
@@ -331,10 +344,17 @@ function infos(json) {
             console.log(imgsrc.src);
             if(isNight) {
                 noite();
+                imgsrc.src = "imagens/lua.gif";
             } else {
                 climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
             }
             break;
+        case "nuvens dispersas":
+          imgsrc.src = "imagens/suner.gif";
+          break;
+          default:
+        imgsrc.src = "imagens/snow.gif";
+        break;
     }
 
     function somaDia(date, soma){
@@ -374,6 +394,7 @@ function infos(json) {
 }
 
 function infosSemana(json) {
+  const days = document.querySelectorAll('.dia-semana');
   document.querySelector("#tempDiaSemana1").innerHTML =  Math.round(`${json.tempDia1}`) + "°/" + Math.round(`${json.tempDia1M}`) + "°";
   document.querySelector("#tempDiaSemana2").innerHTML = Math.round(`${json.tempDia2}`) + "°/" + Math.round(`${json.tempDia2M}`) + "°";
   document.querySelector("#tempDiaSemana3").innerHTML = Math.round(`${json.tempDia3}`) + "°/" + Math.round(`${json.tempDia3M}`) + "°"
@@ -384,6 +405,115 @@ function infosSemana(json) {
   atualizarImagemDia("#imagem-dia3", json.descDia3);
   atualizarImagemDia("#imagem-dia4", json.descDia4);
   atualizarImagemDia("#imagem-dia5", json.descDia5);
+
+  days[0].dataset.umidade = json.umidadeDia1;
+  days[0].dataset.vento = json.velocidadeVento1;
+  days[0].dataset.sensacao =  Math.round(json.sensacaoDia1);
+  days[0].dataset.clima = json.descDia1;
+  days[0].dataset.tempMax =  Math.round(json.tempDia1);
+  days[0].dataset.tempMin =  Math.round(json.tempDia1M);
+
+  days[1].dataset.umidade = json.umidadeDia2;
+  days[1].dataset.vento = json.velocidadeVento2;
+  days[1].dataset.sensacao =  Math.round(json.sensacaoDia2);
+  days[1].dataset.clima = json.descDia2;
+  days[1].dataset.tempMax =  Math.round(json.tempDia2);
+  days[1].dataset.tempMin =  Math.round(json.tempDia2M);
+
+  days[2].dataset.umidade = json.umidadeDia3;
+  days[2].dataset.vento = json.velocidadeVento3;
+  days[2].dataset.sensacao =  Math.round(json.sensacaoDia3);
+  days[2].dataset.clima = json.descDia3;
+  days[2].dataset.tempMax =  Math.round(json.tempDia3);
+  days[2].dataset.tempMin =  Math.round(json.tempDia3M);
+
+  days[3].dataset.umidade = json.umidadeDia4;
+  days[3].dataset.vento = json.velocidadeVento4;
+  days[3].dataset.sensacao =  Math.round(json.sensacaoDia4);
+  days[3].dataset.clima = json.descDia4;
+  days[3].dataset.tempMax =  Math.round(json.tempDia4);
+  days[3].dataset.tempMin =  Math.round(json.tempDia4M);
+
+  days[4].dataset.umidade = json.umidadeDia5;
+  days[4].dataset.vento = json.velocidadeVento5;
+  days[4].dataset.sensacao =  Math.round(json.sensacaoDia5);
+  days[4].dataset.clima = json.descDia5;
+  days[4].dataset.tempMax =  Math.round(json.tempDia5);
+  days[4].dataset.tempMin =  Math.round(json.tempDia5M);
+
+  eventoClick();
+}
+
+function eventoClick(){
+  const days = document.querySelectorAll('.dia-semana');
+
+  days.forEach((day) => {
+    day.addEventListener('click',function(){
+      document.querySelector("#tempHj").textContent = this.dataset.tempMax + "°";
+      document.querySelector("#tempMinT").textContent = this.dataset.tempMin + "°";
+      document.querySelector("#tempMaxT").textContent = this.dataset.tempMax + "°";
+      document.querySelector("#umid").textContent = "Umidade: " + this.dataset.umidade + "%";
+      document.querySelector("#vento").textContent = "Vento: " + Math.round(this.dataset.vento * 3.6) + " km/h";
+      document.querySelector("#sensacao").textContent = "Sensação térmica: " + Math.round(this.dataset.sensacao) + "°";
+      document.querySelector("#climaNome").textContent = "Clima: " + this.dataset.clima;
+
+      atualizarImagem(this.dataset.clima);
+
+      
+
+      if(this.dataset.clima === "ensolarado" || this.dataset.clima === "céu limpo") {
+        climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
+        body.style.background = "#18a7db";
+        form.style.backgroundColor = "#18a7db";
+      } else if(this.dataset.clima.includes("chuva")) {
+        climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
+      }
+      else{
+        climaFocado.style.background = "linear-gradient(#009ad1, #43cdff)";
+        body.style.background = "#18a7db";
+        form.style.backgroundColor = "#18a7db";
+      }
+
+      days.forEach(d => d.classList.remove('dia-selecionado'));
+      this.classList.add('dia-selecionado');
+    });
+  });
+}
+
+function atualizarImagem(desc){
+  const imgsrc = document.querySelector(".imagem-focado");
+  const horaAtual = new Date().getHours();
+  const isNight = horaAtual >= 18 || horaAtual < 6;
+  
+  switch(desc) {
+    case "algumas nuvens":
+        imgsrc.src = "imagens/poucas_nuvensss.gif";
+        break;
+    case "nublado":
+        imgsrc.src = "imagens/nubladoer.gif";
+        break;
+    case "chuva forte":
+        imgsrc.src = "imagens/chuva_forte.gif";
+        break;
+    case "chuva leve":
+        imgsrc.src = "imagens/chuva.gif";
+        break;
+    case "chuva moderada":
+        imgsrc.src = "imagens/nubladoer.gif";
+        break;
+    case "céu limpo":
+      imgsrc.src = isNight ? "imagens/lua.gif" : "imagens/suner.gif";
+      break;
+    case "ensolarado":
+        imgsrc.src = "imagens/suner.gif";
+        break;
+    case "nuvens dispersas": 
+        imgsrc.src = "imagens/poucas_nuvens.gif";
+        break;     
+    default:
+        imgsrc.src = "imagens/snow.gif";
+        break;
+  }
 }
 
 function atualizarImagemDia(selector, descricao) {
@@ -406,9 +536,17 @@ function atualizarImagemDia(selector, descricao) {
           imgsrc.src = "imagens/nublado.gif";
           break;
       case "céu limpo":
+          imgsrc.src = "imagens/sun.gif";
+          break;
       case "ensolarado":
           imgsrc.src = "imagens/sun.gif";
           break;
+      case "nuvens dispersas": 
+          imgsrc.src = "imagens/poucas_nuvens.gif";
+          break;
+      default:
+        imgsrc.src = "imagens/snow.gif";
+        break;
   }
 }
 
@@ -419,21 +557,3 @@ function noite(){
   form.style.backgroundColor = "#01344d";
   var imgsrc = document.querySelector(".imagem-focado");
 }
-
-botao.addEventListener("mouseenter", function(){
-    document.querySelector(".dia-focado").innerHTML = `${json.diaSemana}` + ", " + `${json.dia}` + " de " + `${json.mes}`;
-    document.querySelector("#local").innerHTML = `${json.city}, ${json.pais}`;
-    document.querySelector("#tempHj").innerHTML = Math.round(`${json.temperatura}`) + "°c";
-    document.querySelector("#ventoDir").innerHTML = `${json.direcaoVento}` + "°";
-    document.querySelector("#tempMinT").innerHTML = Math.round(`${json.temperaturaMin}`) + "°c";
-    document.querySelector("#tempMaxT").innerHTML = Math.round(`${json.temperaturaMax}`) + "°c";
-    document.querySelector("#umid").innerHTML = "Umidade: " + `${json.umidadeDia1}` + "%";
-    document.querySelector("#vento").innerHTML = "Vento: " + velVento + " km/h";
-    document.querySelector("#sensacao").innerHTML = "Sensação térmica: " + Math.round(`${json.sensacao}`) + "°c";
-    document.querySelector("#climaNome").innerHTML = "Clima: " + `${json.descrition}`;
-    document.querySelector("#dia-um").innerHTML = somaDia(date,1);
-    document.querySelector("#dia-dois").innerHTML = somaDia(date,2);
-    document.querySelector("#dia-tres").innerHTML = somaDia(date,3);
-    document.querySelector("#dia-quatro").innerHTML = somaDia(date,4);
-    document.querySelector("#dia-cinco").innerHTML = somaDia(date,5);
-})
