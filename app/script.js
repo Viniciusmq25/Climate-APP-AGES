@@ -271,6 +271,33 @@ function infos(json) {
     document.querySelector("#dia-quatro").innerHTML = somaDia(date,4);
     document.querySelector("#dia-cinco").innerHTML = somaDia(date,5);
 
+    
+    const button1 = document.querySelector("#pt");
+    button1.addEventListener('click', function(){
+        document.querySelector("#umid").textContent = "Umidade: " + `${json.humidity}` + "%";
+        document.querySelector("#vento").textContent = "Vento: " + velVento + " km/h";
+        document.querySelector("#sensacao").textContent = "Sensação térmica: " +  Math.round(`${json.sensacao}`) + "°";
+        document.querySelector("#climaNome").textContent = "Clima: " + `${json.descrition}`;
+    });
+  
+
+      const button2 = document.querySelector("#english");
+      button2.addEventListener('click', function(){
+          document.querySelector("#umid").textContent = "Umidity: " + `${json.humidity}` + "%";
+          document.querySelector("#vento").textContent = "Wind speed: " + velVento + " km/h";
+          document.querySelector("#sensacao").textContent = "Feels like: " +  Math.round(`${json.sensacao}`) + "°";
+          document.querySelector("#climaNome").textContent = "Climate: " + `${json.descrition}`;
+      });
+    
+      const button3 = document.querySelector("#spanish");
+      button3.addEventListener('click', function(){
+          document.querySelector("#umid").textContent = "Humidad: " + `${json.humidity}` + "%";
+          document.querySelector("#vento").textContent = "Velocidad del viento: " + velVento + " km/h";
+          document.querySelector("#sensacao").textContent = "Sensación térmica " + Math.round(`${json.sensacao}`) + "°";
+          document.querySelector("#climaNome").textContent = "Clima: " + `${json.descrition}`;
+      });
+    
+
     var dirVento = document.querySelector(".vento");
     dirVento.style.transform = `rotate(${json.direcaoVento}deg)`;
 
@@ -460,7 +487,9 @@ function eventoClick(){
 
       atualizarImagem(this.dataset.clima);
 
-      
+      translatePortugues(this.dataset.umidade, Math.round(this.dataset.vento * 3.6), Math.round(this.dataset.sensacao), this.dataset.clima);
+      translateEnglish(this.dataset.umidade, Math.round(this.dataset.vento * 3.6), Math.round(this.dataset.sensacao), this.dataset.clima);
+      translateSpanish(this.dataset.umidade, Math.round(this.dataset.vento * 3.6), Math.round(this.dataset.sensacao), this.dataset.clima);
 
       if(this.dataset.clima === "ensolarado" || this.dataset.clima === "céu limpo") {
         climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
@@ -478,6 +507,37 @@ function eventoClick(){
       days.forEach(d => d.classList.remove('dia-selecionado'));
       this.classList.add('dia-selecionado');
     });
+  });
+  
+}
+
+function translatePortugues(umidade, vento, sensacao, clima){
+  const button = document.querySelector("#pt");
+  button.addEventListener('click', function(){
+      document.querySelector("#umid").textContent = "Umidade: " + umidade + "%";
+      document.querySelector("#vento").textContent = "Vento: " + vento + " km/h";
+      document.querySelector("#sensacao").textContent = "Sensação térmica: " + sensacao + "°";
+      document.querySelector("#climaNome").textContent = "Clima: " + clima;
+  });
+}
+
+function translateEnglish(umidade, vento, sensacao, clima){
+  const button = document.querySelector("#english");
+  button.addEventListener('click', function(){
+      document.querySelector("#umid").textContent = "Umidity: " + umidade + "%";
+      document.querySelector("#vento").textContent = "Wind speed: " + vento + " km/h";
+      document.querySelector("#sensacao").textContent = "Feels like: " + sensacao + "°";
+      document.querySelector("#climaNome").textContent = "Climate: " + clima;
+  });
+}
+
+function translateSpanish(umidade, vento, sensacao, clima){
+  const button = document.querySelector("#spanish");
+  button.addEventListener('click', function(){
+      document.querySelector("#umid").textContent = "Humedad: " + umidade + "%";
+      document.querySelector("#vento").textContent = "Velocidad del viento: " + vento + " km/h";
+      document.querySelector("#sensacao").textContent = "Sensación térmica " + sensacao + "°";
+      document.querySelector("#climaNome").textContent = "Clima: " + clima;
   });
 }
 
