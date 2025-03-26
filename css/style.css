@@ -258,14 +258,71 @@ form input:focus::placeholder {
   flex-wrap: wrap;
   justify-content: center;
   text-align: center;
+  width: 100%;
+  height: 137px;
 }
 
-.dia-semana{
+.dia-semana1{
   border: var(--cor-fonte) 3px solid;
   border-radius: 15px;
   padding: 5px;
   width: 110px;
+  height: 127px;
 }
+.dia-semana2{
+  border: var(--cor-fonte) 3px solid;
+  border-radius: 15px;
+  padding: 5px;
+  width: 110px;
+  height: 127px;
+}
+.dia-semana3{
+  border: var(--cor-fonte) 3px solid;
+  border-radius: 15px;
+  padding: 5px;
+  width: 110px;
+  height: 127px;
+}
+.dia-semana4{
+  border: var(--cor-fonte) 3px solid;
+  border-radius: 15px;
+  padding: 5px;
+  width: 110px;
+  height: 127px;
+}
+.dia-semana5{
+  border: var(--cor-fonte) 3px solid;
+  border-radius: 15px;
+  padding: 5px;
+  width: 110px;
+  height: 127px;
+}
+
+.dia-semana1:hover{
+  cursor: pointer;
+  width: 115px;
+  height: 132px;
+}
+.dia-semana2:hover{
+  cursor: pointer;
+  width: 115px;
+  height: 132px;
+}
+.dia-semana3:hover{
+  cursor: pointer;
+  width: 115px;
+  height: 132px;
+}
+.dia-semana4:hover{
+  cursor: pointer;
+  width: 115px;
+  height: 132px;
+}
+.dia-semana5:hover{
+  cursor: pointer;
+ width: 115px;
+  height: 132px;
+} 
 
 .dia-texto{
   font-size: 20px;
