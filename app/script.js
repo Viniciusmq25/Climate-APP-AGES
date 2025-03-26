@@ -5,6 +5,48 @@ const body = document.querySelector('body');
 const form = document.querySelector('form');
 var eNoite = false;
 
+function obterLocalizacaoUsuario() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        buscarCidadePorCoordenadas(lat, lon);
+      },
+      (error) => {
+        console.error("Erro ao obter localização:", error);
+        // Define uma cidade padrão caso o usuário negue a localização
+        apiTemp("São Paulo");
+        apiSemana("São Paulo");
+      }
+    );
+  } else {
+    console.log("Geolocalização não suportada pelo navegador");
+    apiTemp("São Paulo");
+    apiSemana("São Paulo");
+  }
+}
+
+async function buscarCidadePorCoordenadas(lat, lon) {
+  const chaveApi = "be8e85f6f23f12abc4517022d09d5e8a";
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${chaveApi}`;
+  
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.name) {
+      document.querySelector('#cidade').value = data.name;
+      apiTemp(data.name);
+      apiSemana(data.name);
+    }
+  } catch (error) {
+    console.error("Erro ao buscar cidade:", error);
+  }
+}
+
+window.addEventListener('load', obterLocalizacaoUsuario);
+
+
 document.querySelector('#cidade').addEventListener('input', async (event) => {
   //Função para buscar cidades com mais de 3 caracteres digitados pelo usuário e exibir sugestões de cidades 
   alertBox.style.display = "none";
