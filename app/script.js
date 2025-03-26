@@ -244,6 +244,7 @@ document.querySelector('#search').addEventListener('submit', async (event) => {
     }
 
     apiTemp(cidade);
+    apiSemana(cidade);
 });
 
 function showAlert(msg) {
@@ -297,7 +298,7 @@ function infos(json) {
             if(isNight) {
               noite();
             } else {
-                climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
+                climaFocado.style.background = "linear-gradient(#009ad1, #43cdff)";
             }
             break;
         case "nublado":
