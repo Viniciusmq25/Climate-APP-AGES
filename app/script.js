@@ -3,6 +3,7 @@ const suggestionsBox = document.querySelector('#suggestions');
 const climaFocado = document.querySelector('.clima-focado');
 const body = document.querySelector('body');
 const form = document.querySelector('form');
+var eNoite = false;
 
 document.querySelector('#cidade').addEventListener('input', async (event) => {
   //Função para buscar cidades com mais de 3 caracteres digitados pelo usuário e exibir sugestões de cidades 
@@ -308,7 +309,7 @@ function infos(json) {
     }
     console.log(intHora);
     const isNight = intHora >= 18 || intHora < 6; // verifica se é noite (entre 18h e 6h)
-    
+    eNoite = intHora >= 18 || intHora < 6;
     if (isNight) {
       noite();
   } else {
@@ -490,19 +491,23 @@ function eventoClick(){
       translatePortugues(this.dataset.umidade, Math.round(this.dataset.vento * 3.6), Math.round(this.dataset.sensacao), this.dataset.clima);
       translateEnglish(this.dataset.umidade, Math.round(this.dataset.vento * 3.6), Math.round(this.dataset.sensacao), this.dataset.clima);
       translateSpanish(this.dataset.umidade, Math.round(this.dataset.vento * 3.6), Math.round(this.dataset.sensacao), this.dataset.clima);
-
-      if(this.dataset.clima === "ensolarado" || this.dataset.clima === "céu limpo") {
-        climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
-        body.style.background = "#18a7db";
-        form.style.backgroundColor = "#18a7db";
-      } else if(this.dataset.clima.includes("chuva")) {
-        climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
+      if(eNoite == true){
+        noite();
+      }else{
+        if(this.dataset.clima === "ensolarado" || this.dataset.clima === "céu limpo") {
+          climaFocado.style.background = "linear-gradient(45deg, rgba(1,170,231,1) 75%, rgba(249,187,84,1) 92%, rgba(255,241,0,1) 100%)";
+          body.style.background = "#18a7db";
+          form.style.backgroundColor = "#18a7db";
+        } else if(this.dataset.clima.includes("chuva")) {
+          climaFocado.style.background = "linear-gradient(#01678b,#43cdff)";
+        }
+        else{
+          climaFocado.style.background = "linear-gradient(#009ad1, #43cdff)";
+          body.style.background = "#18a7db";
+          form.style.backgroundColor = "#18a7db";
+        }
       }
-      else{
-        climaFocado.style.background = "linear-gradient(#009ad1, #43cdff)";
-        body.style.background = "#18a7db";
-        form.style.backgroundColor = "#18a7db";
-      }
+      
 
       days.forEach(d => d.classList.remove('dia-selecionado'));
       this.classList.add('dia-selecionado');
